@@ -11,6 +11,7 @@ event some_event_handled_on_worker()
 
 
 event zeek_init()
-	{
+{
 	schedule 10 secs { some_event_handled_on_worker() } ; 
-	} 
+
+} 

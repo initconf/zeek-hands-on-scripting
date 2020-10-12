@@ -28,7 +28,7 @@ export {
 } 
 
 event DNS::aggregate_stats(request_ip: addr, query: string, qtype_name: string, rcode_name: string)&priority=-10
-	{
+{
 
         if (qtype_name != "PTR")
                 return;
@@ -67,7 +67,8 @@ event DNS::aggregate_stats(request_ip: addr, query: string, qtype_name: string, 
 
 	local n = ptr_queries[request_ip]$ptr_counts ;
 	
-	if (n == 5000) {
+	if (n == 5000)
+        {
                 local msg = fmt ("IP[%s] has done %s look ups: %s", request_ip, n, ptr_queries[request_ip]);
                 NOTICE([$note=DNS::PTRThreshold, $src=request_ip, $msg=msg, $identifier=cat(request_ip), $suppress_for=1 day]);
         }
@@ -75,7 +76,7 @@ event DNS::aggregate_stats(request_ip: addr, query: string, qtype_name: string, 
 
 
 event DNS::log_dns(rec: DNS::Info)
-	{
+{
 	local request_ip: addr;
         local check_thresh: bool;
 
@@ -95,4 +96,4 @@ event DNS::log_dns(rec: DNS::Info)
         local rcode_name =  (!rec?$rcode_name) ? "UNKNOWN" :  rec$rcode_name ;
 
 	event DNS::aggregate_stats(request_ip, rec$query, rec$qtype_name, rcode_name);
-	} 
+} 
